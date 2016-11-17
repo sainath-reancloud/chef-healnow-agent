@@ -27,7 +27,7 @@ ruby_block "get_hostname" do
         Chef::Resource::RubyBlock.send(:include, Chef::Mixin::ShellOut)      
         command = 'curl -s http://169.254.169.254/latest/meta-data/instance-id'
         command_out = shell_out(command)
-        host_name = command_out.stdout
+        node.set['host_name'] = command_out.stdout
     end
     action :create
 end
@@ -37,7 +37,7 @@ ruby_block "get_host_ip" do
         Chef::Resource::RubyBlock.send(:include, Chef::Mixin::ShellOut)      
         command = 'curl -s http://169.254.169.254/latest/meta-data/local-ipv4'
         command_out = shell_out(command)
-        host_ip = command_out.stdout
+        node.set['host_ip'] = command_out.stdout
     end
     action :create
 end
@@ -47,10 +47,6 @@ template '/opt/shs-client/conf/serf_config.json' do
   owner 'root'
   group 'root'
   mode '0666'
-  variables(
-    :host_name => host_name,
-    :host_ip => host_ip
-  )
 end
 
 ruby_block "modify_ssh_handler_file" do
