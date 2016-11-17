@@ -54,13 +54,13 @@ template '/opt/shs-client/conf/serf_config.json' do
   })
 end
 
-# ruby_block "modify_ssh_handler_file" do
-#   block do
-#     fe = Chef::Util::FileEdit.new("/opt/shs-client/bin/shs_handler.sh")
-#     fe.search_file_replace(/\$1/,"#{node['healnow-agent']['healnow_server_ip']}")
-#     fe.write_file
-#   end
-# end
+ruby_block "modify_ssh_handler_file" do
+  block do
+    fe = Chef::Util::FileEdit.new("/opt/shs-client/bin/shs_handler.sh")
+    fe.search_file_replace(/\$1/,"#{node['healnow-agent']['healnow_server_ip']}")
+    fe.write_file
+  end
+end
 
 service 'start healnow agent' do
   service_name 'shs-client'
