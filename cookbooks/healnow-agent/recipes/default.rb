@@ -47,11 +47,6 @@ template '/opt/shs-client/conf/serf_config.json' do
   owner 'root'
   group 'root'
   mode '0666'
-  variables({
-     :HOST_NAME => node['healnow-agent']['host_name'],
-     :HOST_IPADDRESS => node['healnow-agent']['host_ip'],
-     :SERF_SERVER_IP_ADDRESS => node['healnow-agent']['healnow_server_ip']
-  })
 end
 
 ruby_block "modify_ssh_handler_file" do
